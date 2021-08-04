@@ -1,0 +1,140 @@
+/'
+uml from http://www.plantuml.com (use online demo and svg)
+http://www.plantuml.com/plantuml/uml/pLRDSjem4BxxANI42V007eP9yqE7GqEdQNl9v23iXIYnrnvPJfe1thsMBM6B5SI7jjD3CdX_llsygs_boq9ngSeq2N8UlV0Di0NcfRhXYhFfT9ubCSZPZ6s384fuKRJURS3OECCwC6JDZtc9aH8PVd_FGRjZU1KH52niqsvgqyDZcxr01VAL9uDXPRieG2rhy_MLHXiqCRu2mv2zPYBMG1j0a5o13j4mZiMK78WuP5YcAv13maUdb7dC5PZWXlbItcAU2LIVPLRc96jtUBx5k8rpYAbF6F-eaPS8tpZ6MMfAU5Zi0w6RiUOHU5vuM_dfb9QhPuYKTrQ4tbPtMCGiP8MI0ZVw4NaAZY7dwianHAMKWEedJqfWjeUxrb-YK4v2p1NNX5b8ATmONx0dB9iczEAeDFfvqayYYILWPHmG4YS6jpkYCdnuT6dIb7_1rj00BDDJ_JI7e_hR6xfteDuo-V9LPX4KHIrMONExSz4EVBi7gL-OXJRF6BGtob31BxLmNdACJPnhlH0er62ToGtCHG8XczkV2mNfY5LGQx5PoWt7a5st3vKKAgAfA62gbJFJK4QEMj7PwfbeXQPO1N_9OaW6MFqF6SVt4PEm1WaO0G5XknDZFOrkm_m5A1n1sWUjoBizg4-IwVMTSu9QknwqOpTJSEsTBR5A2pifxuQupmNov2ejpDXh4X8IhdSEOQ5VMPSYZaO0DTRaNaah0jUu9qMDuFzUJIC-OZG2FC-Ewlm_9ldd-D6gz0fedMnd7ogVlGn8khqGN0TPLcRfR3jRXuNcNQ-Rvuxh_EgnXUfjq6lpR0-uOOCwOeSbPmljPtKt9705T_3M2cUGSzsWDdB4b6cujNHASNmdG8qOF3Zdjn_5EZww7q8wqJsHUuEwUFNwSwVDnkFPqOmF8Dhd-xHi0oOJyX55A6YKCnyYxatf1lkSBdqIuMTyl6XrN5SB_gr3evpD-I58_m0ZuAves7Gt7fCRubG8uUuDTEZtWJe-B9C9PKH3_8ne867K0ogu18pBDFaD
+'/
+
+
+@startuml
+package InputData <<Folder>> {
+
+class InputData{
+  -onData : onDataFunctionType
+  -devices : InputDataDevice[]
+  -onDataInterval()
+  +setOnDataCBFunc(onData: onDataFunctionType): void
+  -generateData()
+  -generateDataDevice(id: number): InputDataDevice
+  -updateDevice(deviceOrEnpointGroup: InputDataDevice|InputDataEndpointGroup): void
+  -getAndUpdateOneRandomDevice(): InputDataDevice
+}
+interface onDataFunctionType{
+}
+
+package InputDataObject <<Folder>> {
+
+class InputDataEndpoint{
+  +id : string
+  +name : string
+  +path : string
+  +currentValue : number|string
+  +unit : string
+  +dataType : InputDataEndpointDataType
+}
+
+class InputDataDevice{
+  +id : string
+  +name : string
+  +type : string
+  +path : string
+  +children : (InputDataEndpoint|InputDataEndpointGroup|InputDataDevice)[]
+}
+
+class InputDataEndpointGroup{
+  +id : string
+  +name : string
+  +type : string
+  +path : string
+  +children : (InputDataEndpoint)[]
+}
+
+enum InputDataEndpointDataType{
+}
+
+
+}
+}
+class NetworkProcess{
+  -inputData : InputData
+  -nwService : NetworkService
+  -contextId : string
+  -networkId : string
+  +init(forgeFile: ForgeFileItem, configOrgan: ConfigOrgan): Promise<void>
+  +updateData(obj: InputDataDevice): Promise<void>
+  -updateModel(node: any, reference: InputDataDevice | InputDataEndpointGroup): Promise<void>
+  -updateEndpoint(node: any, reference: InputDataEndpoint): Promise<void>
+}
+
+interface ConfigOrgan{
+  +contextName : string
+  +contextType : string
+  +networkType : string
+}
+
+package bms-network <<Folder>> {
+
+class SpinalBmsNetwork{
+  +relationName : string
+  +nodeTypeName : string
+  +id : spinal.Str
+  +name : spinal.Str
+}
+
+class SpinalBmsDevice{
+  +relationName : string
+  +nodeTypeName : string
+  +id : spinal.Str
+  +name : spinal.Str
+  +type : spinal.Str
+  +path : spinal.Str
+}
+
+class SpinalBmsEndpointGroup{
+  +relationName : string
+  +nodeTypeName : string
+  +id : spinal.Str
+  +name : spinal.Str
+  +type : spinal.Str
+  +path : spinal.Str
+}
+
+class SpinalBmsEndpoint{
+  +relationName : string
+  +nodeTypeName : string
+  +id : spinal.Str
+  +path : spinal.Str
+  +currentValue : spinal.Str | spinal.Val
+  +unit : spinal.Str
+  +dataType : spinal.Str
+}
+}
+class NetworkService{
+  -context : SpinalContext
+  -contextId : string
+  +init(forgeFile: spinal.Model, configOrgan: ConfigOrgan): Promise<{contextId:string, networkId: string}>
+  +createNewBmsNetwork(parentId: string, typeName: string): Promise<any>
+  +createNewBmsDevice(parentId: string, obj: InputDataDevice): Promise<any>
+  +createNewBmsEndpointGroup(parentId: string, obj: InputDataEndpointGroup): Promise<any>
+  +createNewBmsEndpoint(parentId: string, obj: InputDataEndpoint): Promise<any>
+}
+
+NetworkService --> SpinalContext
+InputData --> onDataFunctionType
+InputData .. InputDataDevice
+InputDataEndpoint --> InputDataEndpointDataType
+NetworkProcess --> InputData
+NetworkProcess --> NetworkService
+NetworkProcess --> onDataFunctionType
+SpinalBmsNetwork --> spinal.Str
+SpinalBmsEndpointGroup --> spinal.Str
+SpinalBmsDevice --> spinal.Str
+SpinalBmsEndpoint --> spinal.Str
+SpinalBmsEndpoint --> spinal.Val
+spinal.Model <|-- SpinalBmsNetwork
+spinal.Model <|-- SpinalBmsEndpointGroup
+spinal.Model <|-- SpinalBmsDevice
+spinal.Model <|-- SpinalBmsEndpoint
+NetworkService .. SpinalBmsNetwork
+NetworkService .. SpinalBmsEndpointGroup
+NetworkService .. SpinalBmsDevice
+NetworkService .. SpinalBmsEndpoint
+@enduml

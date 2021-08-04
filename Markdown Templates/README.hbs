@@ -1,0 +1,80 @@
+<!-- DO NOT EDIT README.md (It will be overridden by README.hbs) -->
+
+# spinal-organ-network_sample
+
+Sample organ to demonstrate how to use the spinal-model-bmsnetwork.
+
+<!-- START doctoc -->
+<!-- END doctoc -->
+
+# Description
+
+This organ create 3 Devices using interface implementing `spinal-model-bmsnetwork` `inputData`'s interface.
+
+The data in the `Graph Manager` will be as the following
+- Graph
+  - Network
+    - NetworkVirtual
+      - Device 1
+        - Device 1 child_1 - device
+          - Device 1 child_1_1 - groupendpoint
+            - Device 1 child_1_1_1 - endpoint
+        - Device 1 child_2 - groupendpoint
+          - Device 1 child_2_1 - endpoint
+        - Device 1 child_3 - endpoint
+      - ...
+
+The service Use the following key in `SpinalNode.info` to search matching element
+
+SpinalNode type | info Key
+-|-
+<code>SpinalContext\<any\></code> | ContextType
+<code>SpinalNode\<SpinalBmsNetwork\></code> | networkType
+<code>SpinalNode\<SpinalBmsDevice\></code> | idNetWork
+<code>SpinalNode\<SpinalBmsEndpointGroup\></code> | idNetWork
+<code>SpinalNode\<SpinalBmsEndpoint\></code> | idNetWork
+
+# configuration
+Edit the file `config.json5` so the organ can connect to the server the be able to get the forgefile with it `path`.
+
+The organ will search for `organ.ContextType` and  `organ.networkType` then create it if not found.
+
+```js
+{
+  spinalConnector: {
+    user: 168, // user id - process.env.SPINAL_USER_ID
+    password: "JHGgcz45JKilmzknzelf65ddDadggftIO98P", // user password - process.env.SPINAL_USER_ID 
+    host: "localhost", // can be an ip address - process.env.SPINALHUB_IP
+    port: 7777 // port - process.env.SPINALHUB_PORT
+  },
+  file: {
+    // path to a digital twin in spinalhub filesystem || process.env.SPINAL_DTWIN_PATH
+    path: '/__users__/admin/deiv4' 
+  },
+  organ: {
+    contextName: "Network",
+    contextType: "Network",
+    networkType: "NetworkVirtual",
+    networkName: "NetworkVirtual"
+  }
+}
+```
+
+# API
+
+## Interface
+
+<a name="ConfigOrgan"></a>
+
+### ConfigOrgan
+**Kind**: interface
+
+| Param | Type | Value | Comment |
+| --- | --- | --- | --- |
+| contextName | <code>string</code> | | 
+| contextType | <code>string</code> | | 
+| networkType | <code>string</code> | | 
+| networkName | <code>string</code> | | 
+
+
+{{>main~}}

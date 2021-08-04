@@ -1,0 +1,20 @@
+{
+  spinalConnector: {
+    user: 168, // user id - process.env.SPINAL_USER_ID
+    password: "gVG69c3Tv", // user password - process.env.SPINAL_USER_ID 
+    host: "51.178.36.180", // can be an ip address - process.env.SPINALHUB_IP
+    port: 10104 // port - process.env.SPINALHUB_PORT
+  },
+  file: {
+    // path to a digital twin in spinalhub filesystem || process.env.SPINAL_DTWIN_PATH
+    path: '/__users__/admin/Digital twin_B1' 
+  },
+  links : ["./src/Excel/Batiment_B1.xlsx"],
+  organ: {
+    contextName: "PCVueNetwork",
+    contextType: "Network",
+    networkType: "NetworkVirtual",
+    networkName: "NetworkVirtual"
+  },
+  host : 'https://10.22.20.13/RealtimeData/v2/Values/'
+}
