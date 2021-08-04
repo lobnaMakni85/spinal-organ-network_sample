@@ -57,7 +57,9 @@ async function onLoadSuccess(forgeFile: ForgeFileItem) {
   for (const link of links) {
     const fichier = await getExcelToJSON(link);
     const organs = getOrgans(fichier);
+    
     for (const etage of organs) {
+      console.log(etage);
       const inputData = new InputData(etage.data);
       const networkProcess = new NetworkProcess(inputData);
       await networkProcess.init(forgeFile, etage.config);

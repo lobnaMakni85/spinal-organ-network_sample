@@ -289,11 +289,9 @@ import {
   
   
 	public async generateData(etageData) {
-	  // const fichier = await getExcelToJSON(lienExcel);
-	  // const etages = Object.keys(fichier);
-	  const promises = etageData.map(data => this.generateDataByLevel(data))
-	  return Promise.all(promises)
-	}
+		const promises = Object.keys(etageData).map(key => this.generateDataByLevel(etageData[key]));
+		return Promise.all(promises);
+		}
   
 	public async generateDataByLevel(data) {
 	  const levels = Object.keys(data);
