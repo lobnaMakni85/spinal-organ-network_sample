@@ -31,11 +31,11 @@ const config = require("../config.json5");
 
 import { InputData } from "./modules/InputData/InputData";
 import { NetworkProcess } from "./modules/NetworkProcess";
+import { getExcelToJSON } from "./Excel/LectureExcel";
 
 // connection string to connect to spinalhub
-const connectOpt = `https://${config.spinalConnector.user}:${
-  config.spinalConnector.password
-}@${config.spinalConnector.host}:${config.spinalConnector.port}/`;
+const connectOpt = `http://${config.spinalConnector.user}:${config.spinalConnector.password
+  }@${config.spinalConnector.host}:${config.spinalConnector.port}/`;
 
 // initialize the connection
 const conn = spinalCore.connect(connectOpt);
@@ -50,13 +50,40 @@ function onLoadError() {
 }
 
 // called if connected to the server and if the spinalhub sent us the Model
-function onLoadSuccess(forgeFile: ForgeFileItem) {
+async function onLoadSuccess(forgeFile: ForgeFileItem) {
   console.log("Connected to the server and got a the Entry Model");
-  const inputData = new InputData();
-  const networkProcess = new NetworkProcess(inputData);
+  const links = config.links;
 
-  // reset data for test purpose
-  // if (typeof forgeFile.graph !== 'undefined') forgeFile.rem_attr('graph');
+  for (const link of links) {
+    const fichier = await getExcelToJSON(link);
+    const organs = getOrgans(fichier);
+    for (const etage of organs) {
+      const inputData = new InputData(etage.data);
+      const networkProcess = new NetworkProcess(inputData);
+      await networkProcess.init(forgeFile, etage.config);
+    }
+  }
 
-  networkProcess.init(forgeFile, config.organ);
+  // const inputData = new InputData();
+  // const networkProcess = new NetworkProcess(inputData);
+
+  // // reset data for test purpose
+  // // if (typeof forgeFile.graph !== 'undefined') forgeFile.rem_attr('graph');
+
+  // networkProcess.init(forgeFile, config.organ);
+}
+
+
+function getOrgans(fichier) {
+  return Object.keys(fichier).map(el => {
+    return {
+      data: fichier[el],
+      config: {
+        contextName: config.organ.contextName,
+        contextType: config.organ.contextType,
+        networkType: config.organ.networkType,
+        networkName: el
+      }
+    }
+  });
 }
