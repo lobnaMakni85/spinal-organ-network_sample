@@ -289,15 +289,16 @@ import {
   
   
 	public async generateData(etageData) {
-		const promises = Object.keys(etageData).map(key => this.generateDataByLevel(etageData[key]));
+		const promises = Object.keys(etageData).map(key => this.generateDataByLevel(etageData[key],key));
 		return Promise.all(promises);
 		}
   
-	public async generateDataByLevel(data) {
-	  const levels = Object.keys(data);
+	public async generateDataByLevel(data,levelName) {
+	  /*const levels = Object.keys(data);
 	  for (const equimentName of levels) {
 		this.generateEquimentData(equimentName, data[equimentName]);
-	  }
+	  }*/
+	  this.generateEquimentData(levelName, data);
 	}
   
 	public generateEquimentData(equipementName, data) {
