@@ -7,7 +7,7 @@
   },
   file: {
     // path to a digital twin in spinalhub filesystem || process.env.SPINAL_DTWIN_PATH
-    path: '/_users_/admin/Teste PCVue/B1' 
+    path: '/__users__/admin/Teste PCVue/B1' 
   },
   links : ["./src/Excel/Batimenttt_B1.xlsx"],
   organ: {
