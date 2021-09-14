@@ -384,7 +384,7 @@ import { url } from "inspector";
 	}*/
   
 	private concatVariables(object) {
-	  return Object.keys(object).filter(el => el.toLowerCase().includes("variable")).filter(el3 => object[el3] && object[el3].trim().length > 0).map(el2 => object[el2]).join("_");
+	  return Object.keys(object).filter(el => el.toLowerCase().includes("variable")).filter(el3 => object[el3] && object[el3].length > 0).map(el2 => object[el2]).join("/");
 	}
   
 	// /**
