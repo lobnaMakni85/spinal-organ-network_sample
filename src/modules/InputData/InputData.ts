@@ -31,6 +31,7 @@ import {
   } from "./InputDataModel/InputDataModel";
   
   import { getExcelToJSON } from "../../Excel/LectureExcel";
+import { url } from "inspector";
   
   type onDataFunctionType = (obj: InputDataDevice) => void;
   const request = require('request');
@@ -82,7 +83,7 @@ import {
   
   
 	public async init(etageData) {
-	  const intervalTest = 1000 * 60;
+	  const intervalTest = 1000 * 60*5;
 	  // const promises = config.links.map(link => {
 	  //   try {
 	  return this.generateData(etageData);
@@ -321,7 +322,7 @@ import {
 		  this.getDataType(element.Type),
 		  InputDataEndpointType.Other,
 		  element.Id,
-		  this.concatVariables(element)
+		  element.url+"/"+this.concatVariables(element)
 		);
 		res.children.push(child)
 	  });
@@ -383,7 +384,7 @@ import {
 	}*/
   
 	private concatVariables(object) {
-	  return Object.keys(object).filter(el => el.includes("Variable")).map(el2 => object[el2]).join("_");
+	  return Object.keys(object).filter(el => el.toLowerCase().includes("variable")).filter(el3 => object[el3].trim().length > 0).map(el2 => object[el2]).join("_");
 	}
   
 	// /**
