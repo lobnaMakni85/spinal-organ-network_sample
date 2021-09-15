@@ -48,7 +48,7 @@ export const getExcelToJSON = (lienExcelBat) => {
 
          })
 
-         console.log(res);
+         //console.log(res);
 
          const formated = groupByEtage(res);
          lodash.forEach(formated, (value, key) => {

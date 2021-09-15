@@ -3,7 +3,7 @@
     user: 168, // user id - process.env.SPINAL_USER_ID
     password: "CWpuR298k", // user password - process.env.SPINAL_USER_ID 
     host: "51.178.36.180", // can be an ip address - process.env.SPINALHUB_IP
-    port: 10110 // port - process.env.SPINALHUB_PORT
+    port: 10114 // port - process.env.SPINALHUB_PORT
   },
   file: {
     // path to a digital twin in spinalhub filesystem || process.env.SPINAL_DTWIN_PATH

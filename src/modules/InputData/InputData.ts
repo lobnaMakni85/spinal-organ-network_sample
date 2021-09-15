@@ -218,14 +218,16 @@ import { url } from "inspector";
   
 	  try {
   
+		if(this.token==null){
 		await this.getToken()
+		}
   
 	  }
 	  catch (e) {
   
 		console.log(e);
 	  }
-  
+  if(this.token){
 	  const t = this.token.access_token;
 	  const options = {
 		headers: {
@@ -262,6 +264,7 @@ import { url } from "inspector";
 		}
 	  }
 	}
+}
   
   
 	/**
