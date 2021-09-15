@@ -215,19 +215,20 @@ import { url } from "inspector";
 	}
   
 	async fetchData(child: InputDataEndpoint) {
-  
+		if(this.token==null){
 	  try {
   
-		if(this.token==null){
+		
 		await this.getToken()
-		}
+		
   
 	  }
 	  catch (e) {
   
 		console.log(e);
-	  }
-  if(this.token){
+	  }}
+
+  else{
 	  const t = this.token.access_token;
 	  const options = {
 		headers: {
