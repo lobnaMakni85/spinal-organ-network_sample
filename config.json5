@@ -9,7 +9,7 @@
     // path to a digital twin in spinalhub filesystem || process.env.SPINAL_DTWIN_PATH
     path: '/__users__/admin/Teste PCVue/B1' 
   },
-  links : ["./src/Excel/Batiment_B1.xlsx"],
+  links : ["./src/Excel/BatimentA_valide.xlsx"],
   organ: {
     contextName: "BatimentB1",
     contextType: "Network",
