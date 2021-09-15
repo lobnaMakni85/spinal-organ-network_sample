@@ -3,7 +3,7 @@ const request = require('request');
   const utf8 = require('utf8');
   const iconv = require('iconv-lite');
   const q = require("q");
-  const config = require("../../../config.json5")
+  //const config = require("../../../config.json5")
 export class Token{
 private static token=null;
 public static getToken() {
