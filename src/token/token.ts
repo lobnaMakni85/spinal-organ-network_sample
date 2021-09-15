@@ -7,8 +7,9 @@ const request = require('request');
 export class Token{
 private static token=null;
 public static getToken() {
+    //console.log("new token")
     if (this.token){
-    return Promise.resolve(this.token);
+    //return Promise.resolve(this.token);
     return new Promise((resolve, reject) => {
         console.log("new token");
         const CLIENT_SECRET = "83fb7073-2b01-4aa7-9874-b083e7af3eee";
