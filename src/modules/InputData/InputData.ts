@@ -322,7 +322,7 @@ import { url } from "inspector";
 		  this.getDataType(element.Type),
 		  InputDataEndpointType.Other,
 		  element.Id,
-		  element.url+"/"+this.concatVariables(element)
+		  element.url
 		);
 		res.children.push(child)
 	  });
