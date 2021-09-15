@@ -11,7 +11,7 @@
   },
   links : ["./src/Excel/BatimentA_valide.xlsx"],
   organ: {
-    contextName: "BatimentB1",
+    contextName: "BatimentA",
     contextType: "Network",
     networkType: "NetworkVirtual",
     networkName: "NetworkVirtual"
