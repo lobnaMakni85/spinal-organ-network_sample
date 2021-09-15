@@ -32,7 +32,7 @@ import {
   
   import { getExcelToJSON } from "../../Excel/LectureExcel";
 import { url } from "inspector";
-  
+  import{Token} from "../../token/token";
   type onDataFunctionType = (obj: InputDataDevice) => void;
   const request = require('request');
   const axios = require('axios');
@@ -123,7 +123,7 @@ import { url } from "inspector";
 	}
   
 	tokenProm = null;
-	getToken() {
+	/*getToken() {
 	  //console.log("gettoken");
 	  if (this.tokenProm === null) {
 		this.tokenProm = q.defer()
@@ -166,7 +166,7 @@ import { url } from "inspector";
 	  }
 	  return this.tokenProm.promise;
 	}
-  
+  */
   
 	tokenPromRefresh = null;
 	getRefreshToken() {
@@ -219,7 +219,7 @@ import { url } from "inspector";
 	  try {
   
 		
-		await this.getToken()
+		 this.token= await Token.getToken();
 		
   
 	  }
